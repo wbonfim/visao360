@@ -18,10 +18,10 @@ sudo -u postgres psql -c "CREATE DATABASE visao360;"
 sudo -u postgres psql -c "CREATE USER visao360user WITH PASSWORD 'senha_segura';"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE visao360 TO visao360user;"
 
-# 4. Criar estrutura de diretórios
+# 4. Criar estrutura de diretórios e copiar aplicação
 echo "Preparando ambiente..."
 sudo mkdir -p /opt/visao360
-sudo cp /var/www/visao360/requirements.txt /opt/visao360/
+sudo cp -r /var/www/visao360/* /opt/visao360/
 sudo chown -R www-data:www-data /opt/visao360
 
 # 5. Configurar ambiente virtual
@@ -41,8 +41,8 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/opt/visao360
-ExecStart=/opt/visao360/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn/visao360.sock visao360.wsgi:application
+WorkingDirectory=/opt/visao360/visao360
+ExecStart=/opt/visao360/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn/visao360.sock --pythonpath /opt/visao360/visao360 visao360.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
