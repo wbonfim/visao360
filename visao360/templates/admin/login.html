@@ -1,0 +1,45 @@
+{% extends "admin/login.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+#header { 
+    background-color: #1a5276;
+    height: 120px;
+}
+#branding h1 {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 1.8em;
+}
+body {
+    background: #1a5276;
+}
+.login .form-row #id_username, 
+.login .form-row #id_password {
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+.submit-row {
+    padding: 1.5em 0 0 0;
+    margin: 0;
+    text-align: center;
+}
+.submit-row input {
+    background: #2874a6;
+    padding: 10px 20px;
+    font-size: 1.1em;
+}
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <img src="/static/admin/img/logo.png" alt="Logo Visão 360" height="50" style="vertical-align: middle; margin-right: 15px;">
+    Sistema de Gerenciamento Visão 360
+</h1>
+{% endblock %}
