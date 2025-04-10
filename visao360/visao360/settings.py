@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5a5wwxkqc_8b!d6u=8gn7_18ekyy*mo2(vb-(*3=jdvycm682#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['seu_dominio.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['seu-dominio-real.com', 'localhost', '127.0.0.1', 'seu-ip']
 
 
 # Application definition
@@ -121,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/mnt/c/Users/Wellington-Novo/OneDrive/Projeto_Igreja/Visao360/visao360/staticfiles'
+STATIC_ROOT = '/opt/visao360/staticfiles'
 
 # Security settings
 if not DEBUG:
