@@ -28,9 +28,9 @@ apt install -y \
 # Configurar PostgreSQL
 echo "Configurando banco de dados..."
 systemctl start postgresql
-sudo -u postgres psql -c "CREATE DATABASE visao360;"
-sudo -u postgres psql -c "CREATE USER visao360user WITH PASSWORD 'senha_segura';"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE visao360 TO visao360user;"
+sudo -u postgres sh -c "psql -c \"CREATE DATABASE visao360;\""
+sudo -u postgres sh -c "psql -c \"CREATE USER visao360user WITH PASSWORD 'senha_segura';\""
+sudo -u postgres sh -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE visao360 TO visao360user;\""
 
 # Criar ambiente virtual
 echo "Configurando ambiente Python..."

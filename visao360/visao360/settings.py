@@ -121,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/opt/visao360/visao360/staticfiles'
+STATIC_ROOT = '/mnt/c/Users/Wellington-Novo/OneDrive/Projeto_Igreja/Visao360/visao360/staticfiles'
 
 # Security settings
 if not DEBUG:
