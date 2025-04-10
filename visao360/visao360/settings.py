@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5a5wwxkqc_8b!d6u=8gn7_18ekyy*mo2(vb-(*3=jdvycm682#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['seu_dominio.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'visao360.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'visao360',
+        'USER': 'visao360user',
+        'PASSWORD': 'senha_segura',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -117,7 +121,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/mnt/c/Users/Wellington-Novo/OneDrive/Projeto_Igreja/Visao360/visao360/staticfiles'
+STATIC_ROOT = '/opt/visao360/visao360/staticfiles'
+
+# Security settings
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
