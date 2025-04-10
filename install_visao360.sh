@@ -42,7 +42,7 @@ After=network.target
 User=www-data
 Group=www-data
 WorkingDirectory=/opt/visao360
-ExecStart=/opt/visao360/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/opt/visao360/visao360.sock visao360.wsgi:application
+ExecStart=/opt/visao360/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn/visao360.sock visao360.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -57,12 +57,12 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /opt/visao360;
+        root /opt/visao360/staticfiles;
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/opt/visao360/visao360.sock;
+        proxy_pass http://unix:/run/gunicorn/visao360.sock;
     }
 }
 EOF
@@ -71,7 +71,13 @@ EOF
 echo "Finalizando instalação..."
 sudo ln -s /etc/nginx/sites-available/visao360 /etc/nginx/sites-enabled
 sudo nginx -t && sudo systemctl restart nginx
+# Coletar arquivos estáticos
+sudo -u www-data /opt/visao360/venv/bin/python /opt/visao360/manage.py collectstatic --noinput
+
+# Iniciar serviços
 sudo systemctl start gunicorn && sudo systemctl enable gunicorn
+sudo mkdir -p /run/gunicorn
+sudo chown www-data:www-data /run/gunicorn
 
 echo "Instalação completa!"
 echo "Acesse: http://seu_dominio.com"
