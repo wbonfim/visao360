@@ -80,7 +80,7 @@ server {
 EOF
 
 # Habilitar configuração
-ln -s /etc/nginx/sites-available/visao360 /etc/nginx/sites-enabled
+# ln -s /etc/nginx/sites-available/visao360 /etc/nginx/sites-enabled
 nginx -t
 systemctl restart nginx
 systemctl enable gunicorn
