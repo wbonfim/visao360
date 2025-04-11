@@ -71,13 +71,24 @@ EOF
 echo "Finalizando instalação..."
 sudo ln -s /etc/nginx/sites-available/visao360 /etc/nginx/sites-enabled
 sudo nginx -t && sudo systemctl restart nginx
-# Coletar arquivos estáticos
-sudo -u www-data /opt/visao360/venv/bin/python /opt/visao360/manage.py collectstatic --noinput
 
-# Iniciar serviços
-sudo systemctl start gunicorn && sudo systemctl enable gunicorn
+# Criar diretório para socket
 sudo mkdir -p /run/gunicorn
 sudo chown www-data:www-data /run/gunicorn
+
+# Coletar arquivos estáticos
+echo "Coletando arquivos estáticos..."
+sudo -u www-data /opt/visao360/venv/bin/python /opt/visao360/visao360/manage.py collectstatic --noinput
+
+# Configurar reinício automático
+echo "[Service]" | sudo tee -a /etc/systemd/system/gunicorn.service > /dev/null
+echo "Restart=always" | sudo tee -a /etc/systemd/system/gunicorn.service > /dev/null
+echo "RestartSec=5s" | sudo tee -a /etc/systemd/system/gunicorn.service > /dev/null
+
+# Iniciar serviços
+echo "Iniciando serviços..."
+sudo systemctl daemon-reload
+sudo systemctl enable --now gunicorn
 
 echo "Instalação completa!"
 echo "Acesse: http://seu_dominio.com"
